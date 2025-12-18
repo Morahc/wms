@@ -5,7 +5,7 @@ type StatItem = {
   label: string;
   value: string | number;
   description?: string;
-  Icon: React.ElementType;
+  Icon?: React.ElementType;
 };
 
 export function StatBlock({
@@ -19,7 +19,7 @@ export function StatBlock({
         <Card key={label}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">{label}</CardTitle>
-            <Icon className="size-4 text-muted-foreground" />
+            {Icon && <Icon className="size-4 text-muted-foreground" />}
           </CardHeader>
 
           <CardContent>

@@ -5,15 +5,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/datatable";
 import { columns } from "@/features/user/components/user-column";
 import UserFilter from "@/features/user/components/user-filter";
-import { supabaseAdmin } from "@/lib/supabase/admin";
 import { cn } from "@/lib/utils";
-import { createClient } from "@/lib/supabase/server";
+import { users } from "@/data";
 
 export default async function Users() {
-  const {
-    data: { users },
-    error,
-  } = await supabaseAdmin.auth.admin.listUsers();
+  // const {
+  //   data: { users },
+  //   error,
+  // } = await supabaseAdmin.auth.admin.listUsers();
 
   return (
     <div className="space-y-6">
