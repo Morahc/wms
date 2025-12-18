@@ -1,0 +1,1 @@
+export const fonts = ['inter', 'montserrat', 'system'] as const

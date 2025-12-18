@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+
+import { FontProvider } from "@/context/font-context";
+import { ThemeProvider } from "@/context/theme-context";
+
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const montserrat = localFont({
+  src: "../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf",
+  display: "swap",
+  variable: "--font-montserrat",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = localFont({
+  src: "../public/fonts/Inter/Inter-VariableFont.ttf",
+  display: "swap",
+  preload: true,
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -24,10 +31,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${montserrat.variable} ${inter.variable} antialiased`}>
+        <ThemeProvider>
+          <FontProvider>{children}</FontProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
