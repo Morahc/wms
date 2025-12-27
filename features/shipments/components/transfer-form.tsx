@@ -60,12 +60,12 @@ export default function TransferShipment(props: TransferShipmentProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full h-fit">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 md:space-y-6 w-full">
         <Card>
           <CardHeader>
             <h4 className="font-medium">Transfer Information</h4>
           </CardHeader>
-          <CardContent className="grid md:grid-cols-2 gap-6">
+          <CardContent className="grid md:grid-cols-2 gap-3 md:gap-6">
             <FormField
               control={form.control}
               name="originLocation"
@@ -165,7 +165,7 @@ export default function TransferShipment(props: TransferShipmentProps) {
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="notes"

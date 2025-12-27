@@ -18,7 +18,7 @@ export const dummyShipments: Shipment[] = [
       id: "loc_002",
       code: "DC-LA",
       name: "Los Angeles Distribution Center",
-      type: "distribution_center"
+      type: "distribution center"
     },
 
     itemCount: 2,

@@ -55,15 +55,15 @@ export default function ShipmentTypeForm() {
               </div>
               <CardHeader className="flex items-center gap-4">
                 <div className="group-data-[selected=true]:bg-black p-4 rounded-md bg-muted flex items-center justify-center">
-                  <Icon className="group-data-[selected=true]:text-white" />
+                  <Icon className="group-data-[selected=true]:text-white size-5 md:size-6" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold">{type.label}</h3>
-                  <p className="text-sm text-muted-foreground">{type.description}</p>
+                  <h3 className="text-xl md:text-2xl font-semibold">{type.label}</h3>
+                  <p className="text-xs md:text-sm text-muted-foreground">{type.description}</p>
                 </div>
               </CardHeader>
               <CardContent>
-                <ul className="list-disc list-inside text-muted-foreground text-sm space-y-2">
+                <ul className="list-disc list-inside text-muted-foreground text-xs md:text-sm space-y-2">
                   {type.lists.map((list) => (
                     <li key={list}>{list}</li>
                   ))}

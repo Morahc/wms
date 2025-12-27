@@ -58,9 +58,9 @@ const data = [
 
 export function ShipmentTrendChart() {
   return (
-    <Card className={"md:col-span-4"}>
+    <Card className={"md:col-span-5"}>
       <CardContent>
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer width="100%" height={400}>
           <BarChart data={data}>
             <XAxis
               dataKey="name"

@@ -26,7 +26,7 @@ export type InventoryItem = Entity<{
   unitCost: number;
   requiresSpecialHandling: boolean;
   fragile: boolean;
-  isActive: boolean;
+  active: boolean;
 }>
 
 export type StockSummary = {
@@ -52,7 +52,7 @@ export type StockLevel = {
   lastCountedAt?: Date; // Last physical inventory count
 };
 
-export type LocationType = 'warehouse' | 'store' | 'distribution_center' | 'office';
+export type LocationType = 'warehouse' | 'store' | 'distribution center' | 'office';
 
 export type Location = Entity<{
   name: string;
@@ -66,63 +66,14 @@ export type Location = Entity<{
     country: string;
   };
   contactInfo: {
-    phone?: string;
-    email?: string;
-    managerName?: string;
+    phone: string;
+    email: string;
+    managerName: string;
   };
-  isActive: boolean;
+  active: boolean;
 }>
-
-export type Transaction = Entity<{
-  itemId: string;
-  quantity: number;
-  userId: string;
-  shipmentId: string;
-  notes: string;
-}>
-
-// export type User = Entity<{
-//   email: string;
-//   phone: string;
-//   name: string;
-//   role: "admin" | "staff" | "manager",
-//   location: Location
-//   isActive: boolean;
-// }>
-
 
 export type UserRole = "admin" | "manager" | "staff";
-
-export type UserPermission =
-  // Inventory permissions
-  | "inventory:view"
-  | "inventory:create"
-  | "inventory:edit"
-  | "inventory:delete"
-  // Location permissions
-  | "locations:view"
-  | "locations:create"
-  | "locations:edit"
-  | "locations:delete"
-  // Stock permissions
-  | "stock:view"
-  | "stock:adjust"
-  | "stock:transfer"
-  // Shipment permissions
-  | "shipments:view"
-  | "shipments:create"
-  | "shipments:edit"
-  | "shipments:cancel"
-  | "shipments:delete"
-  // User management permissions
-  | "users:view"
-  | "users:create"
-  | "users:edit"
-  | "users:deactivate"
-  | "users:delete"
-  // Report permissions
-  | "reports:view"
-  | "reports:export";
 
 export type User = Entity<{
   email: string;
@@ -136,7 +87,7 @@ export type User = Entity<{
   location?: Pick<Location, "id" | "code" | "name">; // Populated when needed
 
   // Account status
-  isActive: boolean;
+  active: boolean;
   emailVerified: boolean;
   // mustChangePassword: boolean; // Force password change on first login
 

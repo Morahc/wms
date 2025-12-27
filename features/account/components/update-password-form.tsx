@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { showSubmittedData } from "@/lib/show-submitted-data";
 
 export default function UpdatePasswordForm() {
   const [open, setOpen] = useState(false);
@@ -36,10 +37,18 @@ export default function UpdatePasswordForm() {
 
   function onSubmit(payload: UpdatePasswordInput) {
     console.log(payload);
+    showSubmittedData(payload, "Password Updated Successfully");
+    setOpen(false);
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen} >
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        setOpen(open);
+        form.reset();
+      }}
+    >
       <DialogTrigger asChild>
         <Button size={"sm"} variant="outline">
           Change Password

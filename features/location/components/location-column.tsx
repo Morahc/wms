@@ -3,18 +3,22 @@
 import Link from "next/link";
 import { useCopyToClipboard } from "usehooks-ts";
 import { ColumnDef } from "@tanstack/react-table";
-import { CopyIcon, Ellipsis } from "lucide-react";
+import { CopyIcon, Ellipsis, SquarePen, Trash, View } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Location } from "@/types/api";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { useLocation } from "../context/location-context";
+import { toast } from "sonner";
 
 export const columns: ColumnDef<Location>[] = [
   {
@@ -27,14 +31,16 @@ export const columns: ColumnDef<Location>[] = [
     cell: ({ row: { original } }) => {
       const { code } = original;
 
-      return <span className="bg-gray-100 p-1 rounded-md">{code}</span>;
+      return <Badge>{code}</Badge>;
     },
   },
   {
     accessorKey: "type",
     header: "Type",
     cell: ({ row }) => (
-      <span className="capitalize font-medium p-1 rounded-md bg-gray-200">{row.original.type}</span>
+      <Badge variant={"outline"} className="capitalize font-medium">
+        {row.original.type}
+      </Badge>
     ),
   },
   {
@@ -55,25 +61,34 @@ export const columns: ColumnDef<Location>[] = [
     cell: ({ row }) => {
       const { email, managerName, phone } = row.original.contactInfo;
       const [_, copyToClipboard] = useCopyToClipboard();
+
+      const handleCopy = (value: string) => {
+        copyToClipboard(phone);
+        toast.success("Copied to clipboard");
+      };
       return (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger className="border-b border-dashed">{managerName}</TooltipTrigger>
             {email && phone && (
               <TooltipContent side="left" className="w-fit">
-                <div className="text-sm w-full text-pretty">
+                <div className="text-xs md:text-sm w-full text-pretty">
                   {
                     <div className="flex justify-between items-center gap-2">
                       <p>{email}</p>
-                      <Button onClick={() => copyToClipboard(email)}>
-                        <CopyIcon />
+                      <Button
+                        onClick={() => {
+                          handleCopy(email);
+                        }}
+                      >
+                        <CopyIcon className="size-3 md:size-5" />
                       </Button>
                     </div>
                   }
                   <div className="flex justify-between items-center gap-2">
                     <p>{phone}</p>
-                    <Button onClick={() => copyToClipboard(phone)}>
-                      <CopyIcon />
+                    <Button onClick={() => handleCopy(phone)}>
+                      <CopyIcon className="size-3 md:size-5" />
                     </Button>
                   </div>
                 </div>
@@ -85,50 +100,56 @@ export const columns: ColumnDef<Location>[] = [
     },
   },
   {
-    accessorKey: "isActive",
+    accessorKey: "active",
     header: "Status",
     cell: ({ row }) => {
-      const isActive = row.original.isActive;
-      const value = isActive ? "Active" : "Inactive";
+      const active = row.original.active;
+      const value = active ? "Active" : "Inactive";
 
-      return (
-        <span
-          className={cn("font-medium p-1 rounded-md", isActive ? "bg-green-100" : "bg-red-100")}
-        >
-          {value}
-        </span>
-      );
+      return <Badge variant={active ? "success" : "destructive"}>{value}</Badge>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const { id } = row.original;
+      const { setOpen, setCurrentRow } = useLocation();
+      const current = row.original;
 
       return (
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Ellipsis className="size-5" />
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="data-[state=open]:bg-muted flex h-8 w-8 p-0">
+              <Ellipsis size={16} />
+              <span className="sr-only">Open menu</span>
+            </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align="end">
             <DropdownMenuItem>
-              <Link className="w-full" href={`/dashboard/locations/${id}`}>
-                View Details
+              <Link className="w-full" href={`/locations/${current.id}`}>
+                View
               </Link>
+              <DropdownMenuShortcut>
+                <View className="size-3 md:size-5" />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Link className="w-full" href={`/dashboard/locations/${id}/edit`}>
-                Edit Loaction
+              <Link className="w-full" href={`/locations/${current.id}/edit`}>
+                Edit
               </Link>
+              <DropdownMenuShortcut>
+                <SquarePen className="size-3 md:size-5" />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Button
-                onClick={() => alert(id)}
-                variant={"ghost"}
-                className="h-fit w-full justify-start text-destructive"
-              >
-                Delete Location
-              </Button>
+            <DropdownMenuItem
+              onClick={() => {
+                setOpen("delete");
+                setCurrentRow(current);
+              }}
+            >
+              Delete
+              <DropdownMenuShortcut>
+                <Trash className="size-3 md:size-5" />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

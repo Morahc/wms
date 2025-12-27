@@ -22,14 +22,17 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { AddInventoryInput, addInventoryInputSchema } from "@/features/inventory/api/add-inventory";
-import { dummyLocations } from "@/features/location/data";
+import { locations } from "@/features/location/data";
 import { DollarSignIcon, Image, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { InventoryItem } from "@/types/api";
+import { showSubmittedData } from "@/lib/show-submitted-data";
 
-type InventoryFormProps = { initialData?: AddInventoryInput };
+type InventoryFormProps = { initialData?: InventoryItem };
 
 export default function InventoryForm(props: InventoryFormProps) {
   const router = useRouter();
@@ -53,6 +56,7 @@ export default function InventoryForm(props: InventoryFormProps) {
         unit: "cm",
       },
       initialStock: [{ location: "", quantity: 0, reorderLevel: 0 }],
+      active: false,
     },
   });
 
@@ -62,25 +66,26 @@ export default function InventoryForm(props: InventoryFormProps) {
   });
 
   function onSubmit(payload: AddInventoryInput) {
-    console.log(payload);
+    showSubmittedData(payload);
   }
-
-  console.log(form.getFieldState("initialStock").error?.root?.message);
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full h-fit">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-3 md:space-y-6 w-full h-fit relative"
+      >
         <Card>
           <CardHeader>
             <h4 className="font-medium">Basic Information</h4>
             <p className="text-sm text-muted-foreground">Enter the basic details for the item</p>
           </CardHeader>
-          <CardContent className="grid md:grid-cols-2 gap-6">
+          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
             <FormField
               control={form.control}
               name="sku"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="col-span-1">
                   <FormLabel>Sku</FormLabel>
                   <FormControl>
                     <Input placeholder="e.g., LAPTOP-PRO-15" {...field} />
@@ -90,36 +95,42 @@ export default function InventoryForm(props: InventoryFormProps) {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="warehouse">Warehouse</SelectItem>
-                      <SelectItem value="distribution center">Distribution center</SelectItem>
-                      <SelectItem value="office">Office</SelectItem>
-                      <SelectItem value="store">Store</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="col-span-1 border border-red-300">
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder={
+                              <span className="text-xs md:text-sm">Select a category</span>
+                            }
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="warehouse">Warehouse</SelectItem>
+                        <SelectItem value="distribution center">Distribution center</SelectItem>
+                        <SelectItem value="office">Office</SelectItem>
+                        <SelectItem value="store">Store</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel>Item Name</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -135,7 +146,11 @@ export default function InventoryForm(props: InventoryFormProps) {
                 <FormItem className="col-span-2">
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Detailed description of item..." {...field} />
+                    <Textarea
+                      className="h-20"
+                      placeholder="Detailed description of item..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,8 +162,9 @@ export default function InventoryForm(props: InventoryFormProps) {
               name="image"
               render={({ field: { value, onChange, ...rest } }) => (
                 <FormItem className="col-span-2">
-                  <FormLabel className="border rounded-md border-input h-36 flex justify-center items-center">
-                    <Image />
+                  <Label>Image</Label>
+                  <FormLabel className="border rounded-md border-input h-24 md:h-36 flex justify-center items-center">
+                    <Image className="size-4" />
                     {value && <p>{value.name}</p>}
                   </FormLabel>
                   <FormControl>
@@ -299,7 +315,7 @@ export default function InventoryForm(props: InventoryFormProps) {
           <CardHeader>
             <h4 className="font-medium">Pricing & Handling</h4>
           </CardHeader>
-          <CardContent className="grid gap-y-6">
+          <CardContent className="grid gap-y-3 md:gap-y-6">
             <FormField
               control={form.control}
               name="unitCost"
@@ -323,7 +339,7 @@ export default function InventoryForm(props: InventoryFormProps) {
               control={form.control}
               name="fragile"
               render={({ field }) => (
-                <FormItem className="border border-input shadow rounded-md p-6">
+                <FormItem className="border border-input shadow rounded-md p-4 md:p-6">
                   <FormLabel className="flex items-center justify-between">
                     <div className="space-y-2">
                       <p>Fragile Item</p>
@@ -340,7 +356,7 @@ export default function InventoryForm(props: InventoryFormProps) {
               control={form.control}
               name="requiresSpecialHandling"
               render={({ field }) => (
-                <FormItem className="border border-input shadow rounded-md p-6">
+                <FormItem className="border border-input shadow rounded-md p-4 md:p-6">
                   <FormLabel className="flex items-center justify-between">
                     <div className="space-y-2">
                       <p>Special Handling Required</p>
@@ -357,9 +373,9 @@ export default function InventoryForm(props: InventoryFormProps) {
 
             <FormField
               control={form.control}
-              name="isActive"
+              name="active"
               render={({ field }) => (
-                <FormItem className="border border-input shadow rounded-md p-6">
+                <FormItem className="border border-input shadow rounded-md p-4 md:p-6">
                   <FormLabel className="flex items-center justify-between">
                     <div className="space-y-2">
                       <p>Active Status</p>
@@ -389,7 +405,7 @@ export default function InventoryForm(props: InventoryFormProps) {
               + Add Location
             </Button>
           </CardHeader>
-          <CardContent className="grid gap-6">
+          <CardContent className="grid gap-3 md:gap-6">
             {fields.map((field, index) => (
               <div key={field.id} className="flex gap-4 items-end">
                 <FormField
@@ -405,7 +421,7 @@ export default function InventoryForm(props: InventoryFormProps) {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {dummyLocations.map((location) => (
+                          {locations.map((location) => (
                             <SelectItem key={location.id} value={location.id}>
                               {location.name}
                             </SelectItem>
@@ -453,13 +469,18 @@ export default function InventoryForm(props: InventoryFormProps) {
               </div>
             ))}
           </CardContent>
+          {form.getFieldState("initialStock").error && (
+            <p className="text-sm text-destructive px-6">
+              {form.getFieldState("initialStock").error?.message}
+            </p>
+          )}
         </Card>
 
         <div className="flex justify-end gap-4">
           <Button type="button" variant="outline" onClick={() => router.back()}>
             Cancel
           </Button>
-          <Button type="submit">Create Item</Button>
+          <Button type="submit">{props.initialData ? "Update Item" : "Create Item"}</Button>
         </div>
       </form>
     </Form>

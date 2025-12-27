@@ -1,19 +1,19 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { Ellipsis, Trash, X } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 import { User } from "@/types/api";
-import { Ellipsis } from "lucide-react";
-import Link from "next/link";
-import DeactivateUserModal from "./deactivate-user-modal";
+import { useUser } from "../context/user-context";
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -32,20 +32,13 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
-    accessorKey: "isactive",
+    accessorKey: "active",
     header: "Active",
     cell: ({ row }) => {
-      const { isActive } = row.original;
+      const { active } = row.original;
 
       return (
-        <span
-          className={cn(
-            "inline-flex items-center w-fit px-2 h-5 text-xs font-semibold rounded-full text-white",
-            isActive ? "bg-green-500" : "bg-red-500"
-          )}
-        >
-          {isActive ? "Active" : "Not Active"}
-        </span>
+        <Badge variant={active ? "success" : "destructive"}>{active ? "Active" : "Inactive"}</Badge>
       );
     },
   },
@@ -65,25 +58,40 @@ export const columns: ColumnDef<User>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const { id } = row.original;
+      const current = row.original;
+      const { setOpen, setCurrentRow } = useUser();
 
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="p-0 font-normal">
-              <Ellipsis className="h-4 w-4" />
+            <Button variant="ghost" className="data-[state=open]:bg-muted flex h-8 w-8 p-0">
+              <Ellipsis size={16} />
+              <span className="sr-only">Open menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>
-              <Link prefetch href={`/dashboard/inventory/${id}`}>
-                View Details
-              </Link>
+            <DropdownMenuItem
+              onClick={() => {
+                setOpen("deactivate");
+                setCurrentRow(current);
+              }}
+            >
+              Deactivate User
+              <DropdownMenuShortcut>
+                <X className="size-3 md:size-5" />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <DeactivateUserModal />
+            <DropdownMenuItem
+              onClick={() => {
+                setOpen("delete");
+                setCurrentRow(current);
+              }}
+            >
+              Delete
+              <DropdownMenuShortcut>
+                <Trash className="size-3 md:size-5" />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

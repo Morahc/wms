@@ -1,50 +1,74 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import RecentShipmentItem from "./recent-shipment-item";
-import Link from "next/link";
+"use client";
 
-const data = [
-  {
-    id: "ship_001",
-    shipmentNumber: "SHP-2024-001",
-    type: "transfer",
-    status: "in_transit",
+import { TrendingUp } from "lucide-react";
+import { Pie, PieChart } from "recharts";
 
-    itemCount: 2,
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
 
-    priority: "high",
+export const description = "A pie chart with no separator";
+
+const chartData = [
+  { browser: "Delivered", count: 275, fill: "var(--chart-3)" },
+  { browser: "In Transit", count: 200, fill: "var(--chart-2)" },
+  { browser: "Pending", count: 187, fill: "var(--chart-4)" },
+  { browser: "Cancelled", count: 34, fill: "var(--chart-1)" },
+];
+
+const chartConfig = {
+  count: {
+    label: "Count",
   },
-  {
-    id: "ship_002",
-    shipmentNumber: "SHP-2024-002",
-    type: "customer_order",
-    status: "pending",
-
-    itemCount: 5,
-
-    priority: "normal",
+  chrome: {
+    label: "Delivered",
+    color: "var(--chart-3)",
   },
-] as const;
+  safari: {
+    label: "In Transit",
+    color: "var(--chart-2)",
+  },
+  firefox: {
+    label: "Pending",
+    color: "var(--chart-4)",
+  },
+  cancelled: {
+    label: "Cancelled",
+    color: "var(--chart-1)",
+  },
+} satisfies ChartConfig;
 
 export default function RecentShipment() {
   return (
-    <Card className="col-span-1 lg:col-span-3">
-      <CardHeader>
-        <div className="flex justify-between">
-          <div>
-            <h3 className="font-medium text-lg">Recent Shipments</h3>
-            <p>Latest shipment updates</p>
-          </div>
-          <Link href={"/dashboard/shipments"} className={buttonVariants({ variant: "ghost" })}>
-            View all
-          </Link>
-        </div>
+    <Card className="flex flex-col md:col-span-2">
+      <CardHeader className="items-center pb-0">
+        <CardTitle>Recent Shipments</CardTitle>
+        <CardDescription>Latest shipment updates</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        {data.map((item) => (
-          <RecentShipmentItem key={item.id} {...item} />
-        ))}
+      <CardContent className="flex-1 pb-0">
+        <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[250px]">
+          <PieChart>
+            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+            <Pie data={chartData} dataKey="count" nameKey="browser" stroke="0" />
+          </PieChart>
+        </ChartContainer>
       </CardContent>
+      <CardFooter className="flex-col gap-2 text-sm">
+        <div className="flex items-center gap-2 leading-none font-medium">
+          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+        </div>
+      </CardFooter>
     </Card>
   );
 }

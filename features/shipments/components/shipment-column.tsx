@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
@@ -8,11 +9,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Shipment, ShipmentStatus } from "@/types/api";
-import Link from "next/link";
-import { ArrowRight, Dot, Ellipsis } from "lucide-react";
+import { ArrowRight, CircleCheck, CircleX, Dot, Ellipsis, Trash, View } from "lucide-react";
 import { Badge, badgeVariants } from "@/components/ui/badge";
 import { VariantProps } from "class-variance-authority";
 
@@ -41,7 +42,7 @@ export const columns: ColumnDef<Shipment>[] = [
           <span className="flex items-center gap-2">
             <p className="text-sm text-muted-foreground">{originLocation.code}</p>{" "}
             <ArrowRight size={12} />
-            <Badge variant={"secondary"}>{destinationLocation.code}</Badge>
+            <Badge>{destinationLocation.code}</Badge>
           </span>
         );
       }
@@ -89,49 +90,63 @@ export const columns: ColumnDef<Shipment>[] = [
     header: "Items",
   },
   {
-    accessorKey: "createdAt",
-    header: "Created At",
-  },
-  {
     id: "actions",
     cell: ({ row }) => {
       const { id, status } = row.original;
 
       return (
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Ellipsis className="size-5" />
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="data-[state=open]:bg-muted flex h-8 w-8 p-0">
+              <Ellipsis size={16} />
+              <span className="sr-only">Open menu</span>
+            </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align="end">
             <DropdownMenuItem>
-              <Link className="w-full" href={`/dashboard/shipments/${id}`}>
+              <Link className="w-full" href={`/shipments/${id}`}>
                 View
               </Link>
+              <DropdownMenuShortcut>
+                <View className="size-3 md:size-5" />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
-            {status == "draft" ||
+            {/* {status == "draft" ||
               (status == "pending" && (
                 <DropdownMenuItem>
-                  <Link className="w-full" href={`/dashboard/shipments/${id}`}>
+                  <Link className="w-full" href={`/shipments/${id}`}>
                     Edit
                   </Link>
                 </DropdownMenuItem>
-              ))}
-            <DropdownMenuItem asChild>
-              <Button
-                onClick={() => alert(id)}
-                variant={"ghost"}
-                className="h-fit text-destructive"
-              >
-                Delete
-              </Button>
+              ))} */}
+            <DropdownMenuItem>
+              Delete
+              <DropdownMenuShortcut>
+                <Trash className="size-3 md:size-5" />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
             {status === "pending" ? (
-              <DropdownMenuItem>Mark In Transit</DropdownMenuItem>
+              <DropdownMenuItem>
+                Mark In Transit
+                <DropdownMenuShortcut>
+                  <CircleCheck className="size-3 md:size-5" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
             ) : (
-              <DropdownMenuItem>Mark Delivered</DropdownMenuItem>
+              <DropdownMenuItem>
+                Mark Delivered
+                <DropdownMenuShortcut>
+                  <CircleCheck className="size-3 md:size-5" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
             )}
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Cancel Shipment</DropdownMenuItem>
+            <DropdownMenuItem>
+              Cancel Shipment
+              <DropdownMenuShortcut>
+                <CircleX className="size-3 md:size-5" />
+              </DropdownMenuShortcut>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

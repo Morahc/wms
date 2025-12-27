@@ -12,14 +12,14 @@ export const addInventoryInputSchema = z.object({
   size: z.string(),
   weight: z.coerce.number<number>(),
   weightUnit: z.enum(["kg", "lbs"]),
-  unitCost: z.coerce.number<number>(),
+  unitCost: z.coerce.number<number>().gt(0, "Unit cost must be greater than 0"),
   image: z
     .file()
     .max(5 * 1024 * 1024, { message: "File must be at least 5MB" })
     .optional(),
   fragile: z.boolean(),
   requiresSpecialHandling: z.boolean(),
-  isActive: z.boolean(),
+  active: z.boolean(),
   dimensions: z
     .object({
       length: z.coerce.number<number>().gt(0, "Value must be greater than 0"),

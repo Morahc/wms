@@ -1,40 +1,41 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import Image from "next/image";
 
+import { DataTableColumnHeader } from "@/components/shared/data-table-column-header";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { formatter } from "@/lib/utils";
 import { InventoryItem } from "@/types/api";
-import { ArrowUpDown, Ellipsis } from "lucide-react";
+import { Ellipsis, Eye, Pencil, SquarePen, Trash, View } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { cn, formatter } from "@/lib/utils";
+import { useInventory } from "../context/inventory-context";
 
 export const columns: ColumnDef<InventoryItem>[] = [
   {
     accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
     cell: ({ row }) => {
-      const { name, fragile } = row.original;
+      const { name, fragile, imageUrl } = row.original;
       return (
-        <span>
-          {name} {fragile && <Badge variant={"outline"}>Fragile</Badge>}
-        </span>
+        <div className="flex items-center gap-x-3 w-max">
+          <Image
+            src={imageUrl}
+            alt={name}
+            width={40}
+            height={40}
+            className="object-cover aspect-square"
+          />
+          <span>{name}</span> {fragile && <Badge variant={"outline"}>Fragile</Badge>}
+        </div>
       );
     },
   },
@@ -42,12 +43,12 @@ export const columns: ColumnDef<InventoryItem>[] = [
     accessorKey: "sku",
     header: "SKU",
     cell: ({ row }) => {
-      return <Badge variant={"secondary"}>{row.original.sku}</Badge>;
+      return <Badge variant={"default"}>{row.original.sku}</Badge>;
     },
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Category" />,
   },
   {
     accessorKey: "unitCost",
@@ -60,40 +61,58 @@ export const columns: ColumnDef<InventoryItem>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const isActive = row.original.isActive;
-      const value = isActive ? "Active" : "Inactive";
+      const active = row.original.active;
+      const value = active ? "Active" : "Inactive";
 
-      return <Badge variant={isActive ? "success" : "destructive"}>{value}</Badge>;
+      return <Badge variant={active ? "success" : "destructive"}>{value}</Badge>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const { id } = row.original;
+      const { setCurrentRow, setOpen } = useInventory();
+      const current = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Ellipsis size={18} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <Link className="w-full" href={`/dashboard/inventory/${id}`}>
-                View
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link className="w-full" href={`/dashboard/inventory/${id}/edit`}>
-                Edit
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Button onClick={() => alert(id)} variant={"ghost"} className="text-destructive">
-                Delete
+        <div className="relative">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="data-[state=open]:bg-muted flex h-8 w-8 p-0">
+                <Ellipsis size={16} />
+                <span className="sr-only">Open menu</span>
               </Button>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-[160px]">
+              <DropdownMenuItem>
+                <Link className="w-full" href={`/inventory/${current.id}`}>
+                  View
+                </Link>
+                <DropdownMenuShortcut>
+                  <View className="size-3 md:size-5" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link className="w-full" href={`/inventory/${current.id}/edit`}>
+                  Edit
+                </Link>
+                <DropdownMenuShortcut>
+                  <SquarePen className="size-3 md:size-5" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpen("delete");
+                  setCurrentRow(current);
+                }}
+              >
+                Delete
+                <DropdownMenuShortcut>
+                  <Trash className="size-3 md:size-5" />
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       );
     },
   },

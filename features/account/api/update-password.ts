@@ -2,13 +2,13 @@ import { z } from "zod";
 
 export const updatePasswordInputSchema = z.object({
   currentPassword: z.string().min(8, {
-    message: "Name is required",
+    message: "Current password is required",
   }),
   newPassword: z.string().min(8, {
-    message: "SKU is required",
+    message: "New password is required",
   }),
   confirmPassword: z.string()
-}).refine(({ newPassword, currentPassword }) => currentPassword === newPassword, {
+}).refine(({ newPassword, confirmPassword }) => confirmPassword === newPassword, {
   message: "Passwords do not match",
   path: ["confirmPassword"],
 });

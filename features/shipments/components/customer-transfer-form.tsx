@@ -28,7 +28,7 @@ import {
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
-import { dummyLocations } from "@/features/location/data";
+import { locations } from "@/features/location/data";
 import { Switch } from "@/components/ui/switch";
 
 type CustomerTransferShipmentProps = { initialData?: CreateCustomerShipmentInput };
@@ -98,7 +98,7 @@ export default function CustomerTransferShipment(props: CustomerTransferShipment
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {dummyLocations.map((location) => (
+                      {locations.map((location) => (
                         <SelectItem key={location.id} value={location.id}>
                           {location.name}
                         </SelectItem>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { PackageOpen } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -31,8 +31,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { dummyLocations } from "@/features/location/data";
+import { locations } from "@/features/location/data";
 import { AddInventoryStockInput, addInventoryStockInputSchema } from "../api/add-inventory-stock";
+import { showSubmittedData } from "@/lib/show-submitted-data";
 
 export default function AddStockForm({ itemId }: { itemId: string }) {
   const [open, setOpen] = useState(false);
@@ -49,15 +50,15 @@ export default function AddStockForm({ itemId }: { itemId: string }) {
   });
 
   function onSubmit(payload: AddInventoryStockInput) {
-    console.log(payload);
+    showSubmittedData(payload, "Added new stock to item");
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size={"sm"}>
-          <Plus className="mr-2 h-4 w-4" />
           Add Stock
+          <PackageOpen className="h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -80,7 +81,7 @@ export default function AddStockForm({ itemId }: { itemId: string }) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {dummyLocations.map((location) => (
+                      {locations.map((location) => (
                         <SelectItem key={location.id} value={location.id}>
                           {location.name}
                         </SelectItem>
@@ -119,9 +120,13 @@ export default function AddStockForm({ itemId }: { itemId: string }) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {dummyLocations.map((location) => (
+                      {[
+                        { id: "1", value: "Resupply" },
+                        { id: "2", value: "Inventory Recount" },
+                        { id: "3", value: "Terminated Shipment" },
+                      ].map((location) => (
                         <SelectItem key={location.id} value={location.id}>
-                          {location.name}
+                          {location.value}
                         </SelectItem>
                       ))}
                     </SelectContent>

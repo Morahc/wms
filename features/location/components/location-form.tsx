@@ -1,10 +1,10 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-import { AddLocationInput, addLocationInputSchema } from "@/features/location/api/add-location";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -14,7 +14,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -22,46 +21,40 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import Link from "next/link";
+import { AddLocationInput, addLocationInputSchema } from "@/features/location/api/add-location";
+import { showSubmittedData } from "@/lib/show-submitted-data";
+import { useRouter } from "next/navigation";
 
-type LocationFormProps = { initialData?: AddLocationInput; onSuccess?: () => void };
+type LocationFormProps = { initialData?: AddLocationInput };
 
 export default function LocationForm(props: LocationFormProps) {
+  const router = useRouter();
+
   const form = useForm<AddLocationInput>({
     resolver: zodResolver(addLocationInputSchema),
-    defaultValues: props.initialData
-      ? props.initialData
-      : {
-          name: "",
-          code: "",
-          contactInfo: {
-            email: "",
-            managerName: "",
-            phone: "",
-          },
-          address: {
-            country: "",
-            state: "",
-            city: "",
-            street: "",
-            postalCode: "",
-          },
-          isActive: false,
-        },
+    defaultValues: props.initialData ?? {
+      name: "",
+      code: "",
+      contactInfo: {
+        email: "",
+        managerName: "",
+        phone: "",
+      },
+      address: {
+        country: "",
+        state: "",
+        city: "",
+        street: "",
+        postalCode: "",
+      },
+      active: false,
+    },
   });
 
   function onSubmit(payload: AddLocationInput) {
-    console.log(payload);
-    if (props.onSuccess) {
-      props.onSuccess();
-    }
-    if (props.initialData) {
-      // update
-    } else {
-      // create
-    }
+    showSubmittedData(payload);
+    router.push("/locations");
   }
 
   return (
@@ -128,7 +121,7 @@ export default function LocationForm(props: LocationFormProps) {
 
             <FormField
               control={form.control}
-              name="isActive"
+              name="active"
               render={({ field }) => (
                 <FormItem className="col-span-2 border border-input shadow rounded-md p-6">
                   <FormLabel className="flex items-center justify-between">
@@ -249,7 +242,7 @@ export default function LocationForm(props: LocationFormProps) {
                 <FormItem>
                   <FormLabel>Manager Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., location@company.com" {...field} />
+                    <Input placeholder="e.g., location@ance.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -272,12 +265,9 @@ export default function LocationForm(props: LocationFormProps) {
         </Card>
 
         <div className="flex items-center gap-2 justify-end">
-          <Link
-            href={"/dashboard/locations"}
-            className={buttonVariants({ variant: "secondary", size: "sm" })}
-          >
+          <Button type="button" variant="outline" onClick={() => router.back()}>
             Cancel
-          </Link>
+          </Button>
           <Button size="sm" type="submit">
             {props.initialData ? "Save Changes" : "Create Location"}
           </Button>

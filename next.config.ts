@@ -2,7 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  typedRoutes: true
+  typedRoutes: true,
+  images: {
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: 'images.unsplash.com',
+      port: '',
+      pathname: '/**', // Allows any path under the hostname
+    },],
+  },
 };
 
 export default nextConfig;

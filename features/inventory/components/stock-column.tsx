@@ -19,7 +19,7 @@ export const columns: ColumnDef<StockLevel>[] = [
           <MapPin className="size-4" />
           <div>
             <Link
-              href={`/dashboard/locations/${id}`}
+              href={`/locations/${id}`}
               className="font-medium capitalize hover:border-b border-dashed"
             >
               {name}

@@ -20,7 +20,7 @@ export const addLocationInputSchema = z.object({
     email: z.string(),
     managerName: z.string(),
   }),
-  isActive: z.boolean(),
+  active: z.boolean(),
 });
 
 export type AddLocationInput = z.TypeOf<typeof addLocationInputSchema>;

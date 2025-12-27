@@ -1,19 +1,19 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
-import { AddUserInput, addUserInputSchema } from "@/features/user/api/add-user";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -21,14 +21,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { dummyLocations } from "@/features/location/data";
 import { Switch } from "@/components/ui/switch";
+import { locations } from "@/features/location/data";
+import { AddUserInput, addUserInputSchema } from "@/features/user/api/add-user";
+import { showSubmittedData } from "@/lib/show-submitted-data";
+import { useRouter } from "next/navigation";
 
 type UserFormProps = { initialData?: AddUserInput };
 
 export default function UserForm(props: UserFormProps) {
+  const router = useRouter();
+
   const form = useForm<AddUserInput>({
     resolver: zodResolver(addUserInputSchema),
     defaultValues: props.initialData ?? {
@@ -37,36 +40,31 @@ export default function UserForm(props: UserFormProps) {
       role: "staff",
       phone: "",
       location: "",
-      isActive: false,
+      active: false,
     },
   });
 
   function onSubmit(payload: AddUserInput) {
-    console.log(payload);
-    if (props.initialData) {
-      // update
-    } else {
-      // create
-    }
+    showSubmittedData(payload, "New user created");
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 md:space-y-6">
         <Card>
           <CardHeader>
             <h4 className="font-medium">Basic Information</h4>
             <p className="text-sm text-muted-foreground">Enter the basic details for the user</p>
           </CardHeader>
-          <CardContent className="grid md:grid-cols-2 gap-6 items-start">
+          <CardContent className="flex flex-col md:grid md:grid-cols-2 gap-4 items-start">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem className="col-span-2">
+                <FormItem className="md:col-span-2">
                   <FormLabel>Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., John Doe" {...field} />
+                    <Input placeholder="e.g John Doe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -76,10 +74,10 @@ export default function UserForm(props: UserFormProps) {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., johndoe@location.com" {...field} />
+                    <Input placeholder="e.g johndoe@location.com" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -92,7 +90,7 @@ export default function UserForm(props: UserFormProps) {
                 <FormItem>
                   <FormLabel>Phone</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., +1 (718) 555-0123" {...field} />
+                    <Input placeholder="e.g +1 (718) 555-0123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -112,7 +110,9 @@ export default function UserForm(props: UserFormProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem disabled value="admin">
+                        Admin
+                      </SelectItem>
                       <SelectItem value="manager">Manager</SelectItem>
                       <SelectItem value="staff">Staff</SelectItem>
                     </SelectContent>
@@ -135,12 +135,13 @@ export default function UserForm(props: UserFormProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {dummyLocations.map((item) => (
-                        <SelectItem value={item.id}>{item.name}</SelectItem>
+                      {locations.map((item) => (
+                        <SelectItem key={item.name} value={item.id}>
+                          {item.name}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormDescription>Staff assigned location</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -148,7 +149,7 @@ export default function UserForm(props: UserFormProps) {
 
             <FormField
               control={form.control}
-              name="isActive"
+              name="active"
               render={({ field }) => (
                 <FormItem className="border border-input shadow rounded-md p-6 col-span-2">
                   <FormLabel className="flex items-center justify-between">
@@ -165,7 +166,12 @@ export default function UserForm(props: UserFormProps) {
           </CardContent>
         </Card>
 
-        <Button type="submit">{props.initialData ? "Save Changes" : "Create"}</Button>
+        <div className="flex justify-end gap-x-2 md:gap-x-4">
+          <Button type="button" variant="outline" onClick={() => router.back()}>
+            Cancel
+          </Button>
+          <Button type="submit">{props.initialData ? "Save Changes" : "Create"}</Button>
+        </div>
       </form>
     </Form>
   );

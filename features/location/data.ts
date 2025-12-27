@@ -1,6 +1,6 @@
 import { Location } from "@/types/api";
 
-export const dummyLocations: Location[] = [
+export const locations: Location[] = [
   {
     id: "loc_001",
     name: "Central Warehouse NYC",
@@ -15,10 +15,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (718) 555-0123",
-      email: "nyc.warehouse@company.com",
+      email: "nyc.warehouse@ance.com",
       managerName: "Michael Chen"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2023-01-15T08:30:00Z"),
     updatedAt: new Date("2024-10-28T14:20:00Z")
   },
@@ -26,7 +26,7 @@ export const dummyLocations: Location[] = [
     id: "loc_002",
     name: "Los Angeles Distribution Center",
     code: "DC-LA",
-    type: "distribution_center",
+    type: "distribution center",
     address: {
       street: "1550 Commerce Drive",
       city: "Los Angeles",
@@ -36,10 +36,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (213) 555-0456",
-      email: "la.distribution@company.com",
+      email: "la.distribution@ance.com",
       managerName: "Sarah Martinez"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2023-03-22T10:00:00Z"),
     updatedAt: new Date("2024-10-30T09:15:00Z")
   },
@@ -57,10 +57,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (312) 555-0789",
-      email: "chicago.warehouse@company.com",
+      email: "chicago.warehouse@ance.com",
       managerName: "David Johnson"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2023-05-10T11:45:00Z"),
     updatedAt: new Date("2024-10-29T16:30:00Z")
   },
@@ -78,10 +78,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (305) 555-0234",
-      email: "miami.store@company.com",
+      email: "miami.store@ance.com",
       managerName: "Isabella Rodriguez"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2023-07-08T09:00:00Z"),
     updatedAt: new Date("2024-10-31T10:45:00Z")
   },
@@ -89,7 +89,7 @@ export const dummyLocations: Location[] = [
     id: "loc_005",
     name: "Seattle Distribution Hub",
     code: "DC-SEA",
-    type: "distribution_center",
+    type: "distribution center",
     address: {
       street: "4567 Airport Way South",
       city: "Seattle",
@@ -99,10 +99,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (206) 555-0567",
-      email: "seattle.distribution@company.com",
+      email: "seattle.distribution@ance.com",
       managerName: "Robert Kim"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2023-08-19T13:20:00Z"),
     updatedAt: new Date("2024-10-30T11:00:00Z")
   },
@@ -120,10 +120,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (512) 555-0890",
-      email: "austin.store@company.com",
+      email: "austin.store@ance.com",
       managerName: "Jennifer Williams"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2023-09-25T08:15:00Z"),
     updatedAt: new Date("2024-10-29T15:20:00Z")
   },
@@ -141,10 +141,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (617) 555-0123",
-      email: "boston.warehouse@company.com",
+      email: "boston.warehouse@ance.com",
       managerName: "Patrick O'Brien"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2023-11-03T10:30:00Z"),
     updatedAt: new Date("2024-10-28T13:45:00Z")
   },
@@ -152,7 +152,7 @@ export const dummyLocations: Location[] = [
     id: "loc_008",
     name: "Phoenix Distribution Center",
     code: "DC-PHX",
-    type: "distribution_center",
+    type: "distribution center",
     address: {
       street: "7890 East Valley Drive",
       city: "Phoenix",
@@ -162,10 +162,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (602) 555-0456",
-      email: "phoenix.distribution@company.com",
+      email: "phoenix.distribution@ance.com",
       managerName: "Maria Garcia"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-01-17T09:00:00Z"),
     updatedAt: new Date("2024-10-30T08:30:00Z")
   },
@@ -183,10 +183,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (503) 555-0789",
-      email: "portland.store@company.com",
+      email: "portland.store@ance.com",
       managerName: "Emily Thompson"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-02-14T11:00:00Z"),
     updatedAt: new Date("2024-10-31T09:15:00Z")
   },
@@ -204,10 +204,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (303) 555-0234",
-      email: "denver.warehouse@company.com",
+      email: "denver.warehouse@ance.com",
       managerName: "James Anderson"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-03-22T14:30:00Z"),
     updatedAt: new Date("2024-10-29T17:00:00Z")
   },
@@ -225,10 +225,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (404) 555-0567",
-      email: "atlanta.office@company.com",
+      email: "atlanta.office@ance.com",
       managerName: "Lisa Brooks"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2023-02-28T08:00:00Z"),
     updatedAt: new Date("2024-10-30T12:00:00Z")
   },
@@ -246,10 +246,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (415) 555-0890",
-      email: "sf.store@company.com",
+      email: "sf.store@ance.com",
       managerName: "Kevin Nguyen"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-04-12T10:00:00Z"),
     updatedAt: new Date("2024-10-31T11:30:00Z")
   },
@@ -257,7 +257,7 @@ export const dummyLocations: Location[] = [
     id: "loc_013",
     name: "Dallas Distribution Center",
     code: "DC-DFW",
-    type: "distribution_center",
+    type: "distribution center",
     address: {
       street: "5678 Interstate 35 East",
       city: "Dallas",
@@ -267,10 +267,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (214) 555-0123",
-      email: "dallas.distribution@company.com",
+      email: "dallas.distribution@ance.com",
       managerName: "Amanda Davis"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-05-20T09:30:00Z"),
     updatedAt: new Date("2024-10-28T14:45:00Z")
   },
@@ -288,10 +288,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (215) 555-0456",
-      email: "philly.old@company.com",
+      email: "philly.old@ance.com",
       managerName: "Thomas Wright"
     },
-    isActive: false,
+    active: false,
     createdAt: new Date("2022-11-10T07:00:00Z"),
     updatedAt: new Date("2024-06-15T16:00:00Z")
   },
@@ -309,10 +309,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (615) 555-0789",
-      email: "nashville.store@company.com",
+      email: "nashville.store@ance.com",
       managerName: "Rachel Cooper"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-06-30T12:00:00Z"),
     updatedAt: new Date("2024-10-30T10:30:00Z")
   },
@@ -330,10 +330,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (612) 555-0234",
-      email: "minneapolis.warehouse@company.com",
+      email: "minneapolis.warehouse@ance.com",
       managerName: "Andrew Peterson"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-07-18T08:45:00Z"),
     updatedAt: new Date("2024-10-29T12:15:00Z")
   },
@@ -341,7 +341,7 @@ export const dummyLocations: Location[] = [
     id: "loc_017",
     name: "Las Vegas Distribution Center",
     code: "DC-LAS",
-    type: "distribution_center",
+    type: "distribution center",
     address: {
       street: "8901 Las Vegas Boulevard",
       city: "Las Vegas",
@@ -351,10 +351,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (702) 555-0567",
-      email: "vegas.distribution@company.com",
+      email: "vegas.distribution@ance.com",
       managerName: "Nicole Taylor"
     },
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-08-05T13:00:00Z"),
     updatedAt: new Date("2024-10-31T08:00:00Z")
   },
@@ -372,10 +372,10 @@ export const dummyLocations: Location[] = [
     },
     contactInfo: {
       phone: "+1 (313) 555-0890",
-      email: "detroit.closed@company.com",
+      email: "detroit.closed@ance.com",
       managerName: "Mark Stevens"
     },
-    isActive: false,
+    active: false,
     createdAt: new Date("2022-08-20T09:00:00Z"),
     updatedAt: new Date("2024-03-10T17:00:00Z")
   }
@@ -535,3 +535,10 @@ export const dummyLocationStockSummary: Record<string, {
     lastCounted: new Date("2024-03-10T17:00:00Z")
   }
 };
+
+export const locationTypes = [
+  { label: "Warehouse", value: "warehouse" },
+  { label: "Distribution Center", value: "distribution center" },
+  { label: "Store", value: "store" },
+  { label: "Office", value: "office" }
+];

@@ -1,6 +1,6 @@
-import { InventoryItem, StockLevel, StockSummary } from "@/types/api";
+import { InventoryItem, StockSummary } from "@/types/api";
 
-export const dummyInventoryItems: InventoryItem[] = [
+export const inventoryItems: InventoryItem[] = [
   {
     id: "item_001",
     sku: "WM-2024-001",
@@ -20,7 +20,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 24.99,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-01-15T08:30:00Z"),
     updatedAt: new Date("2024-10-30T14:20:00Z")
   },
@@ -43,7 +43,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 89.99,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-01-20T10:00:00Z"),
     updatedAt: new Date("2024-10-28T09:15:00Z")
   },
@@ -65,7 +65,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 12.99,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-02-05T11:30:00Z"),
     updatedAt: new Date("2024-10-29T16:45:00Z")
   },
@@ -88,7 +88,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 45.00,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-02-12T14:00:00Z"),
     updatedAt: new Date("2024-10-30T11:00:00Z")
   },
@@ -110,7 +110,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 18.50,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-02-18T09:00:00Z"),
     updatedAt: new Date("2024-10-27T13:30:00Z")
   },
@@ -132,7 +132,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 55.00,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-03-01T10:30:00Z"),
     updatedAt: new Date("2024-10-29T15:20:00Z")
   },
@@ -155,7 +155,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 79.99,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-03-10T12:00:00Z"),
     updatedAt: new Date("2024-10-31T08:45:00Z")
   },
@@ -178,7 +178,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 15.99,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-03-15T11:00:00Z"),
     updatedAt: new Date("2024-10-28T10:30:00Z")
   },
@@ -200,7 +200,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 189.99,
     requiresSpecialHandling: true,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-03-22T09:30:00Z"),
     updatedAt: new Date("2024-10-30T14:00:00Z")
   },
@@ -222,7 +222,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 32.50,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-04-01T08:00:00Z"),
     updatedAt: new Date("2024-10-29T12:15:00Z")
   },
@@ -244,7 +244,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 199.99,
     requiresSpecialHandling: true,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-04-10T10:00:00Z"),
     updatedAt: new Date("2024-10-27T09:00:00Z")
   },
@@ -266,7 +266,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 29.99,
     requiresSpecialHandling: true,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-04-15T11:30:00Z"),
     updatedAt: new Date("2024-10-30T16:20:00Z")
   },
@@ -288,7 +288,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 75.00,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-05-01T09:00:00Z"),
     updatedAt: new Date("2024-10-28T11:45:00Z")
   },
@@ -310,7 +310,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 42.00,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-05-10T14:00:00Z"),
     updatedAt: new Date("2024-10-29T13:00:00Z")
   },
@@ -332,7 +332,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 65.00,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-05-20T10:30:00Z"),
     updatedAt: new Date("2024-10-30T08:00:00Z")
   },
@@ -354,7 +354,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 48.99,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-06-01T11:00:00Z"),
     updatedAt: new Date("2024-10-31T09:30:00Z")
   },
@@ -376,7 +376,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 39.99,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-06-10T09:00:00Z"),
     updatedAt: new Date("2024-10-28T14:30:00Z")
   },
@@ -398,7 +398,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 68.00,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-06-18T10:30:00Z"),
     updatedAt: new Date("2024-10-29T11:15:00Z")
   },
@@ -420,7 +420,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 85.00,
     requiresSpecialHandling: true,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-07-01T08:00:00Z"),
     updatedAt: new Date("2024-10-30T10:00:00Z")
   },
@@ -442,7 +442,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 28.50,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-07-10T11:00:00Z"),
     updatedAt: new Date("2024-10-27T15:45:00Z")
   },
@@ -464,7 +464,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 22.99,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-07-20T09:30:00Z"),
     updatedAt: new Date("2024-10-28T12:00:00Z")
   },
@@ -486,7 +486,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 34.99,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-08-01T10:00:00Z"),
     updatedAt: new Date("2024-10-29T14:20:00Z")
   },
@@ -508,7 +508,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 16.50,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-08-10T11:30:00Z"),
     updatedAt: new Date("2024-10-30T09:45:00Z")
   },
@@ -530,7 +530,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 25.99,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-08-20T09:00:00Z"),
     updatedAt: new Date("2024-10-31T10:15:00Z")
   },
@@ -552,7 +552,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 95.00,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-09-01T10:00:00Z"),
     updatedAt: new Date("2024-10-28T13:30:00Z")
   },
@@ -574,7 +574,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 14.99,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-09-10T11:00:00Z"),
     updatedAt: new Date("2024-10-29T15:00:00Z")
   },
@@ -596,7 +596,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 72.00,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-09-20T09:30:00Z"),
     updatedAt: new Date("2024-10-30T11:30:00Z")
   },
@@ -618,7 +618,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 36.99,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-10-01T10:00:00Z"),
     updatedAt: new Date("2024-10-31T09:00:00Z")
   },
@@ -640,7 +640,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 42.50,
     requiresSpecialHandling: false,
     fragile: false,
-    isActive: true,
+    active: true,
     createdAt: new Date("2024-10-10T11:30:00Z"),
     updatedAt: new Date("2024-10-30T14:45:00Z")
   },
@@ -662,7 +662,7 @@ export const dummyInventoryItems: InventoryItem[] = [
     unitCost: 85.00,
     requiresSpecialHandling: false,
     fragile: true,
-    isActive: false,
+    active: false,
     createdAt: new Date("2023-05-15T08:00:00Z"),
     updatedAt: new Date("2024-07-20T16:00:00Z")
   }
@@ -690,7 +690,7 @@ export const sampleInventoryItem: InventoryItem = {
   unitCost: 24.99,
   requiresSpecialHandling: false,
   fragile: true,
-  isActive: true,
+  active: true,
   createdAt: new Date("2024-01-15T08:30:00Z"),
   updatedAt: new Date("2024-10-30T14:20:00Z")
 };
@@ -701,11 +701,11 @@ export const sampleStockSummary: StockSummary = {
     id: "item_001",
     name: "Wireless Mouse",
   },
-  totalQuantity: 1570, // Sum of all quantities
-  totalReserved: 58, // Sum of all reserved
-  totalAvailable: 1512, // Sum of all available
+  totalQuantity: 70, // Sum of all quantities
+  totalReserved: 8, // Sum of all reserved
+  totalAvailable: 62, // Sum of all available
   locationCount: 8, // Number of locations with stock
-  totalValue: 39213.30, // 1570 × $24.99
+  totalValue: 9213.30, // 1570 × $24.99
   lowStockLocations: 2,
   locationsWithStock: [
     {

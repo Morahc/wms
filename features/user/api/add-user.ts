@@ -10,7 +10,7 @@ export const addUserInputSchema = z.object({
     error: "Select a valid role",
   }),
   location: z.string().min(1, "Location is required"),
-  isActive: z.boolean(),
+  active: z.boolean(),
 });
 
 export type AddUserInput = z.TypeOf<typeof addUserInputSchema>;
